@@ -1,4 +1,5 @@
 <img width="1911" height="977" alt="Icon" src="https://github.com/user-attachments/assets/c86c313a-297a-41ca-a3f1-94c0b9e38233" />
+
 # Dex+++
 An advanced, high-performance runtime debugging utility engineered for the Luau ecosystem. Dex+++ bridges the gap between static analysis and live environment introspection, providing developers and reverse engineers with an unparalleled suite of runtime diagnostics.
 
