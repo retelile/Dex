@@ -6,15 +6,15 @@ An advanced, high-performance runtime debugging utility engineered for the Luau 
 
 Developed by Retelile, Moon, and Chillz, with algorithmic optimizations and dataset synthesis powered by Mossad’s AI Engineers & Scraping Data.
 
-# 🛠 Core Architecture & Features
-📂 Advanced Object Explorer
+🛠 Core Architecture & Features
+# 📂 Advanced Object Explorer
 A highly optimized virtual tree implementation capable of rendering massive instance hierarchies without UI thread degradation.
 
 Real-time instance tracking and lifecycle monitoring.
 
 High-speed dynamic filtering and deep-nested search queries.
 
-# 📊 Dynamic Property Inspector
+📊 Dynamic Property Inspector
 Inspect and manipulate reflection data on the fly.
 
 Direct memory write simulation for property primitives.
@@ -37,6 +37,13 @@ Intercepts and decodes RemoteEvent and RemoteFunction invocations.
 
 Clean data serialization for rapid payload analysis.
 
+# 💬 Real-Time Chat Logger
+A dedicated textual interception module built to hook directly into the environment's chat service channels.
+
+Silently captures and archives incoming and outgoing message packets.
+
+Tracks system logs, whispers, and channel-specific communication strings with source indexing.
+
 # 💾 High-Efficiency Save Instance
 A completely overhauled serialization engine built to bypass default high-overhead dumping methods.
 
@@ -49,4 +56,3 @@ A lightweight scratchpad for hot-swapping code snippets, tracking memory address
 
 <img width="542" height="542" alt="image" src="https://github.com/user-attachments/assets/d8535ec6-cfe2-4a5e-9192-a6681892635a" />
 
-**Image Above Requested by Moon**
