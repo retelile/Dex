@@ -45,3 +45,5 @@ Drastically reduced file sizes and minimized disk write I/O bottlenecks.
 
 # 📝 Integrated Notepad
 A lightweight scratchpad for hot-swapping code snippets, tracking memory addresses, or staging scripts during active live-debugging sessions.
+
+<img width="542" height="542" alt="image" src="https://github.com/user-attachments/assets/d8535ec6-cfe2-4a5e-9192-a6681892635a" />
