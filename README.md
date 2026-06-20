@@ -54,5 +54,17 @@ Drastically reduced file sizes and minimized disk write I/O bottlenecks.
 # 📝 Integrated Notepad
 A lightweight scratchpad for hot-swapping code snippets, tracking memory addresses, or staging scripts during active live-debugging sessions.
 
+# 🔮 Infinite Yield Commands
+Dex+++ provides you with Infinite Yield, a popular script on Roblox. And now its here in Dex!
+
+
+
+# Agent only features
+
+Agent only features are the features that wont be released to the public eye for Israel's demands because of its power.
+- Dex Honey ServerScript Reader
+- Dex AI Assist
+
+
 <img width="542" height="542" alt="image" src="https://github.com/user-attachments/assets/d8535ec6-cfe2-4a5e-9192-a6681892635a" />
 
