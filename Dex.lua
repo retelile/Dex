@@ -13,6 +13,30 @@ local nodes = {}
 local oldgame = game
 local game = workspace.Parent
 
+-- Declare exploit environment functions
+local cloneref: any
+local getreg: any
+local firetouchinterest: any
+local fireclickdetector: any
+local fireproximityprompt: any
+local getnamecallmethod: any
+local gethsfuncs: any
+local identifyexecutor: any
+local getgc: any
+local get_gc_objects: any
+local getupvalues: any
+local getupvals: any
+local getconstants: any
+local getconsts: any
+local getinfo: any
+local readfile: any
+local writefile: any
+local isfile: any
+local isfolder: any
+local listfiles: any
+local delfile: any
+local delfolder: any
+
 cloneref = cloneref or function(ref)
 	if not getreg then return ref end
 	
@@ -79,7 +103,7 @@ local function initAfterMain()
 end
 
 local function main()
-	local Console = {}
+	local Console: {[string]: any} = {}
 
 	local window,ConsoleFrame
 
@@ -878,7 +902,7 @@ local function initAfterMain()
 end
 
 local function main()
-	local Explorer = {}
+	local Explorer: {[string]: any} = {}
 	local tree,listEntries,explorerOrders,searchResults,specResults = {},{},{},{},{}
 	local expanded
 	local entryTemplate,treeFrame,toolBar,descendantAddedCon,descendantRemovingCon,itemChangedCon
@@ -11177,7 +11201,7 @@ local function initAfterMain()
 end
 
 local function main()
-	local Properties = {}
+	local Properties: {[string]: any} = {}
 
 	local window, toolBar, propsFrame
 	local scrollV, scrollH
@@ -13093,7 +13117,7 @@ local function initAfterMain()
 end
 
 local function main()
-	local SaveInstance = {}
+	local SaveInstance: {[string]: any} = {}
 	local window, ListFrame
 	local fileName = "Place_"..game.PlaceId.."_"..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name.."_{TIMESTAMP}"
 	local Saving = false
@@ -13411,9 +13435,12 @@ local function getPath(obj)
 	end
 end
 
+
+
 local function main()
-	local ScriptViewer = {}
+	local ScriptViewer: {[string]: any} = {}
 	local window, codeFrame
+	
 	
 	local execute, clear, dumpbtn, obfuscateBtn
 	local obfuscatorWindow, obfuscatorCodeFrame
@@ -13789,6 +13816,201 @@ else
 	return {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
 end
 end,
+["ChatLogger"] = function()
+--[[
+	Chat Logger App Module
+	Logs all chat messages with timestamps and player names
+]]
+
+-- Common Locals
+local Main,Lib,Apps,Settings
+local Explorer, Properties, ScriptViewer, SettingsWindow, Notebook
+local API,RMD,env,service,plr,create,createSimple
+
+local function initDeps(data)
+	Main = data.Main
+	Lib = data.Lib
+	Apps = data.Apps
+	Settings = data.Settings
+	API = data.API
+	RMD = data.RMD
+	env = data.env
+	service = data.service
+	plr = data.plr
+	create = data.create
+	createSimple = data.createSimple
+end
+
+local function initAfterMain()
+	Explorer = Apps.Explorer
+	Properties = Apps.Properties
+	ScriptViewer = Apps.ScriptViewer
+	SettingsWindow = Apps.SettingsWindow
+	Notebook = Apps.Notebook
+end
+
+local function main()
+	local ChatLogger: {[string]: any} = {}
+	local window, codeFrame
+	local chatLogs = {}
+	
+	local function formatChatEntry(player, message, timestamp)
+		local timeStr = os.date("%H:%M:%S", timestamp)
+		return string.format("[%s] %s: %s", timeStr, player, message)
+	end
+	
+	local function updateChatDisplay()
+		local displayText = table.concat(chatLogs, "\n")
+		if codeFrame then
+			codeFrame.Text = displayText
+		end
+	end
+	
+	window = Lib.Window.new()
+	window:SetTitle("Chat Logger")
+	window:Resize(600, 400)
+	
+	local displayBox = Instance.new("TextLabel", window.GuiElems.Content)
+	displayBox.Position = UDim2.new(0,0,0,20)
+	displayBox.Size = UDim2.new(1,0,1,-40)
+	displayBox.BackgroundColor3 = Color3.fromRGB(30,30,30)
+	displayBox.BorderSizePixel = 0
+	displayBox.TextColor3 = Color3.new(1,1,1)
+	displayBox.Font = Enum.Font.SourceSans
+	displayBox.TextSize = 12
+	displayBox.TextWrapped = true
+	displayBox.Text = ""
+	codeFrame = displayBox
+	
+	local saveChat = Instance.new("TextButton", window.GuiElems.Content)
+	saveChat.BackgroundTransparency = 1
+	saveChat.Size = UDim2.new(0.3333333333333333,0,0,20)
+	saveChat.Position = UDim2.new(0,0,1,-20)
+	saveChat.Text = "Save to File"
+	saveChat.TextColor3 = Color3.new(1,1,1)
+	
+	local copyChat = Instance.new("TextButton", window.GuiElems.Content)
+	copyChat.BackgroundTransparency = 1
+	copyChat.Size = UDim2.new(0.3333333333333333,0,0,20)
+	copyChat.Position = UDim2.new(0.3333333333333333,0,1,-20)
+	copyChat.Text = "Copy"
+	if env.setclipboard then
+		copyChat.TextColor3 = Color3.new(1,1,1)
+		copyChat.Interactable = true
+	else
+		copyChat.TextColor3 = Color3.new(0.5,0.5,0.5)
+		copyChat.Interactable = false
+	end
+	
+	local clearChat = Instance.new("TextButton", window.GuiElems.Content)
+	clearChat.BackgroundTransparency = 1
+	clearChat.Size = UDim2.new(0.3333333333333333,0,0,20)
+	clearChat.Position = UDim2.new(0.6666666666666666,0,1,-20)
+	clearChat.Text = "Clear"
+	clearChat.TextColor3 = Color3.new(1,1,1)
+	
+	saveChat.MouseButton1Click:Connect(function()
+		local logContent = table.concat(chatLogs, "\n")
+		if logContent == "" then return end
+		
+		local filename = "Place_"..game.PlaceId.."_ChatLog_"..os.time()..".txt"
+		if env.writefile then
+			env.writefile(filename, logContent)
+		elseif Lib.SaveAsPrompt then
+			Lib.SaveAsPrompt(filename, logContent)
+		end
+	end)
+	
+	copyChat.MouseButton1Click:Connect(function()
+		local logContent = table.concat(chatLogs, "\n")
+		if logContent ~= "" and env.setclipboard then
+			env.setclipboard(logContent)
+		end
+	end)
+	
+	clearChat.MouseButton1Click:Connect(function()
+		chatLogs = {}
+		updateChatDisplay()
+	end)
+	
+	ChatLogger.OpenChatLogger = function()
+		updateChatDisplay()
+		window:ShowAndFocus()
+	end
+	
+	ChatLogger.HideChatLogger = function()
+		if window then
+			window:Hide()
+		end
+	end
+	
+	ChatLogger.LogMessage = function(player, message)
+		table.insert(chatLogs, formatChatEntry(player, message, os.time()))
+		updateChatDisplay()
+	end
+	
+	ChatLogger.Window = window
+	
+	pcall(function()
+		local Players = game:GetService("Players")
+		
+		for _, player in pairs(Players:GetPlayers()) do
+			pcall(function()
+				local char = player.Character
+				if char then
+					local humanoidRootPart = char:FindFirstChild("HumanoidRootPart")
+					if humanoidRootPart then
+						ChatLogger.LogMessage(player.Name, "[Joined]")
+					end
+				end
+			end)
+		end
+		
+		Players.PlayerAdded:Connect(function(player)
+			ChatLogger.LogMessage(player.Name, "[Joined]")
+		end)
+		
+		Players.PlayerRemoving:Connect(function(player)
+			ChatLogger.LogMessage(player.Name, "[Left]")
+		end)
+	end)
+	
+	pcall(function()
+		local Chat = game:GetService("Chat")
+		Chat.Chatted:Connect(function(part, message, color)
+			if part and part.Parent and part.Parent:FindFirstChild("Humanoid") then
+				local player = game.Players:FindFirstChild(part.Parent.Name)
+				if player then
+					ChatLogger.LogMessage(player.Name, message)
+				end
+			end
+		end)
+	end)
+	
+	pcall(function()
+		local TextChatService = game:GetService("TextChatService")
+		if TextChatService then
+			TextChatService.MessageReceived:Connect(function(message)
+				if message.TextSource then
+					local player = game.Players:FindFirstChild(message.TextSource.Name)
+					if player then
+						ChatLogger.LogMessage(player.Name, message.Text)
+					end
+				end
+			end)
+		end
+	end)
+	
+	return ChatLogger
+end
+
+-- TODO: Remove when open source
+if gethsfuncs then
+	_G.moduleData = {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
+else
+	return {InitDeps = initDeps, InitAfterMain = initAfterMain, Main = main}
+end
+end,
 ["SettingsWindow"] = function()
 --[[
 	Save Instance App Module
@@ -13825,7 +14047,7 @@ local function initAfterMain()
 end
 
 local function main()
-	local SettingsWindow = {}
+	local SettingsWindow: {[string]: any} = {}
 	local window, ListFrame
 	local fileName = "Place_"..game.PlaceId.."_"..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name.."_{TIMESTAMP}"
 	local Saving = false
@@ -14386,9 +14608,9 @@ local createSimple = function(class,props)
 end
 
 Main = (function()
-	local Main = {}
+	local Main: {[string]: any} = {}
 
-	Main.ModuleList = {"Explorer","Properties","ScriptViewer","Console","SaveInstance","ModelViewer","SettingsWindow"}
+	Main.ModuleList = {"Explorer","Properties","ScriptViewer","Console","SaveInstance","ModelViewer","SettingsWindow","ChatLogger"}
 	Main.Elevated = false
 	Main.AllowDraggableOnMobile = true
 	Main.MissingEnv = {}
@@ -15571,7 +15793,7 @@ Main = (function()
 	Main.CreateMainGui = function()
 		local gui = create({
 			{1,"ScreenGui",{IgnoreGuiInset=true,Name="MainMenu",}},
-			{2,"TextButton",{AnchorPoint=Vector2.new(0.5,0),AutoButtonColor=false,BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,Font=4,Name="OpenButton",Parent={1},Position=UDim2.new(0.5,0,0,2),Size=UDim2.new(0,55,0,32),Text="Dex++",TextColor3=Color3.new(1,1,1),TextSize=16,TextTransparency=0.20000000298023,}},
+			{2,"TextButton",{AnchorPoint=Vector2.new(0.5,0),AutoButtonColor=false,BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),BorderSizePixel=0,Font=4,Name="OpenButton",Parent={1},Position=UDim2.new(0.5,0,0,2),Size=UDim2.new(0,55,0,32),Text="Dex+++",TextColor3=Color3.new(1,1,1),TextSize=16,TextTransparency=0.20000000298023,}},
 			{3,"UICorner",{CornerRadius=UDim.new(0,4),Parent={2},}},
 			{4,"Frame",{AnchorPoint=Vector2.new(0.5,0),BackgroundColor3=Color3.new(0.17647059261799,0.17647059261799,0.17647059261799),ClipsDescendants=true,Name="MainFrame",Parent={2},Position=UDim2.new(0.5,0,1,-4),Size=UDim2.new(0,224,0,200),}},
 			{5,"UICorner",{CornerRadius=UDim.new(0,4),Parent={4},}},
@@ -15639,6 +15861,7 @@ Main = (function()
 				"Moon (Dex)",
 				"Cazan (3D Preview)",
 	            "Chillz (Dex++)",
+	            "Retelile (Dex+++ Features)",
 			}
 			
 			if isInfoCD then return end
@@ -15704,6 +15927,21 @@ Main = (function()
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
 			end
 		end})
+		
+		Main.CreateApp({Name = "Chat Logger", IconMap = Main.LargeIcons, Icon = "LogIcon", Open = false, OnClick = function(open)
+			if open then
+				Apps.ChatLogger.OpenChatLogger()
+			else
+				Apps.ChatLogger.HideChatLogger()
+			end
+		end})
+		
+		Main.CreateApp({Name = "Infinite Yield", IconMap = Main.LargeIcons, Icon = "IYicon", Open = false, OnClick = function(open)
+			if open then
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+			end
+		end})
+		
 		
 		Main.CreateApp({Name = "Console", IconMap = Main.LargeIcons, Icon = "Executor", Window = Console.Window})
 		
@@ -15773,9 +16011,9 @@ Main = (function()
 			SelectChildren = 28,       SelectChildren_Disabled = 29,    InsertObject = 30,     ViewScript = 31,        AddStar = 32,         RemoveStar = 33,          Script_Disabled = 34,
 			LocalScript_Disabled = 35, Play = 36,                       Pause = 37,            Rename_Disabled = 38,   Empty = 1000
 		})
-		Main.LargeIcons = Lib.IconMap.new("rbxassetid://80261056878782",256,256,32,32)
+		Main.LargeIcons = Lib.IconMap.new("rbxassetid://131661903962601",256,256,32,32)
 		Main.LargeIcons:SetDict({
-			Explorer = 0, Properties = 1, Script_Viewer = 2, Obfuscator_Icon = 9, SpyIcon = 10, Watcher = 3, Output = 4, ScriptEdit = 5, Book = 6, Executor = 7, Object = 8
+			Explorer = 0, Properties = 1, Script_Viewer = 2, Obfuscator_Icon = 9, SpyIcon = 10, LogIcon = 11, IYicon = 12, Watcher = 3, Output = 4, ScriptEdit = 5, Book = 6, Executor = 7, Object = 8
 		})
 		
 		--[[ Loading bypasses
