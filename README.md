@@ -58,6 +58,8 @@ A lightweight scratchpad for hot-swapping code snippets, tracking memory address
 # 🔮 Infinite Yield Commands
 Dex+++ provides you with Infinite Yield, a popular script on Roblox. And now its here in Dex!
 
+# 🎶 Audio Logger
+Dex+++ lets you view the ID's of any Audio playing in the game!
 
 
 # Agent only features
