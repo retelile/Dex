@@ -1,4 +1,5 @@
-<img width="1920" height="1002" alt="Version2" src="https://github.com/user-attachments/assets/d4a30e6b-e074-4a0d-b5ab-9e7d5ee378e8" />
+<img width="1920" height="990" alt="DexPPPVersion3" src="https://github.com/user-attachments/assets/b664293b-1be2-410b-a389-803a0671497b" />
+
 
 
 # Dex+++
