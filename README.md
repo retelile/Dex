@@ -15,7 +15,7 @@ Real-time instance tracking and lifecycle monitoring.
 
 High-speed dynamic filtering and deep-nested search queries.
 
-📊 Dynamic Property Inspector
+# 📊 Dynamic Property Inspector
 Inspect and manipulate reflection data on the fly.
 
 Direct memory write simulation for property primitives.
