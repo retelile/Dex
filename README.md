@@ -69,6 +69,5 @@ Agent only features are the features that wont be released to the public eye for
 - Dex AI Assist
 - Secret Service Panel
 
-
-<img width="542" height="542" alt="image" src="https://github.com/user-attachments/assets/d8535ec6-cfe2-4a5e-9192-a6681892635a" />
+- To contact me about bugs, visit https://discord.gg/JfC7ZbzMCy
 
