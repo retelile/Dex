@@ -55,8 +55,8 @@ Drastically reduced file sizes and minimized disk write I/O bottlenecks.
 # 📝 Integrated Notepad
 A lightweight scratchpad for hot-swapping code snippets, tracking memory addresses, or staging scripts during active live-debugging sessions.
 
-# 🔮 Infinite Yield Commands
-Dex+++ provides you with Infinite Yield, a popular script on Roblox. And now its here in Dex!
+# 🔮 Terminal Commands
+Dex+++ provides you with our own command system, you can go to Console and type cmds for more info!
 
 # 🎶 Audio Logger
 Dex+++ lets you view the ID's of any Audio playing in the game!
@@ -69,5 +69,5 @@ Agent only features are the features that wont be released to the public eye for
 - Dex AI Assist
 - Secret Service Panel
 
-To contact me about bugs, visit https://discord.gg/JfC7ZbzMCy
+To contact me about bugs, visit [our discord server](https://discord.gg/5TMjpY6a23)
 
