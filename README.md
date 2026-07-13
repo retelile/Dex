@@ -25,8 +25,8 @@ Real-time changed-signal listeners to track state mutations instantly.
 # 📐 3D Model Viewer
 An isolated viewport rendering subsystem designed to isolate, inspect, and analyze specific asset geometry and spatial data outside the global workspace context.
 
-# 🔒 Inline Script Obfuscator
-Protect runtime string definitions and generated logic directly within the environment. Features localized AST transformation capabilities to deter lightweight memory inspection.
+# 🎬 Animation Previewer
+Preview any Animation on a live rig inside an isolated viewport. Select an Animation in the Explorer, right-click it and choose "Animation Previewer" to spawn a rig that plays the animation on a loop — orbit the camera to inspect it from any angle.
 
 # 💻 Low-Overhead Developer Console
 A clean, high-throughput log interception engine that captures standard output, errors, and system warnings with precise timestamping and microsecond accuracy.
